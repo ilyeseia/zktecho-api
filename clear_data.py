@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-import time
 
 CWD = os.path.dirname(os.path.realpath(__file__))
 ROOT_DIR = os.path.dirname(CWD)
@@ -14,10 +13,12 @@ conn = None
 zk = ZK('192.168.2.201', port=4370)
 try:
     conn = zk.connect()
-    for i in range(0, 55):
-        print ("Voice number #%d" % i)
-        conn.test_voice(i)
-        time.sleep(3)
+    choices = raw_input('Are you sure want to delete all data? [Y/N]: ')
+    if choices == 'Y':
+        print ("Clear all data...")
+        conn.clear_data()
+    else:
+        print ("Clear all data canceled !")
 except Exception as e:
     print ("Process terminate : {}".format(e))
 finally:
